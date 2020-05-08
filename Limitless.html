@@ -3,27 +3,33 @@
 
 	<head>
 		<title>Limitless</title>
-		<link rel = "stylesheet " href = "Limitless.css" >
+		<link rel="stylesheet " href="Limitless.css">
+		<style>
+			canvas {
+				border: 1px solid lime;
+				display: block;
+				margin: 0 auto;
+			}
+
+		</style>
 	</head>
 
 	<body>
-			<div class="obstacle" id="obstacle1"></div>
+		<canvas id="game" width="428" height="606"></canvas>
+		<div class="obstacle" id="obstacle1"></div>
 		<div class="image"></div>
 		<div class="UpsidedownObstacleimage"></div>
-		<div class = "Obstacleimage"></div>
+		<div class="Obstacleimage"></div>
 
-		<!--The jQuery library-->
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-    <!--Site-specific JavaScript code using jQuery-->
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-    <script src="Limitless.js"></script>
+
+
+		<script src="Limitless.js"></script>
 
 
 	</body>
 
 	</html>
-
-
-

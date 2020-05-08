@@ -1,44 +1,53 @@
-$(document).ready(() => {
-  let $target = $("#UpsidedownObstacleimage");
-  let $source = $("#obstacle1");
+var canvas = document.getElementById("game");
+var context = canvas.getContext("2d");
 
-  // Move the source with mouse for example
-  $(document).mousemove((event) => {
-    // First move the source with mouse
-    $source.css({ top: event.clientY, left: event.clientX });
+function art() {
+	context.fillStyle = "blue";
+	canvas.fillRect(0, 0, canvas.width, context.height);
 
-    // Now see if the source and target have collided
-    // The collision algorithm is in testCollision
-    // If you have more than one target, just loop this..
-    if (testCollision($source, $target) == true) {
-      // I am just changing the targets color, but you could do anything here
-      $target.removeClass("no-collision-state");
-      $target.addClass("collision-state");
-      //$target.removeClass("no-collision-state");
-    } else {
-      // removing color if not collided
-      $target.removeClass("collision-state");
-      $target.addClass("no-collision-state");
-    }
-  });
-});
-
-// Here is the collision algorithm
-function testCollision(s, t) {
-  // This tests to see if the two boxes overlap
-  if (
-    s.position().left < t.position().left + t.width() &&
-    s.position().left + s.width() > t.position().left &&
-    s.position().top < t.position().top + t.height() &&
-    s.position().top + s.height() > t.position().top
-  ) {
-    // collision detected!
-    console.log("collision!");
-    return true;
-  }
-
-  // no collision
-  console.log("no collision");
-  return false;
 }
+var game = new Image();
+game.src = "/Users/ramsesherrera/Downloads/newGame.png";
+context.drawImage(game, gX, gY, gWidth, gHeight, dX, dY, dWidth, dHeight);
+var name = {
+	gX: 300,
+	gY: 200,
+	w: 57,
+	h: 22,
+	X: 3,
+	y: 3,
+	draw: function () {
+		context.drawImage(game, this.gX, this.gY, this.w, this.h, this.x, this.y, this.w, this.h);
+	}
+}
+function draw(){
+	name.draw();
+}
+function loop(){
+	draw();
+	requestAnimationFrame(loop);
+}
+loop();
+var hero = {
+	animation: [
+		{gX: 276, gY : 112},
+        {gX: 276, gY : 139},
+		{gX: 276, gY : 164},
+        {gX: 276, gY : 139}
+	],
+	x : 50,
+    y : 150,
+    w : 34,
+    h : 26,
+
+    radius : 12,
+
+    frame : 0,
+
+    gravity : 0.25,
+    jump : 4.6,
+    speed : 0,
+    rotation : 0,
+}
+
 
