@@ -28,9 +28,6 @@ canvas.addEventListener("click", function (event) {
 
 })
 
-
-
-
 var background = {
 	gX: 0,
 	gY: 0,
@@ -132,7 +129,7 @@ var gameOver = {
 	x: canvas.width - 173 / 2,
 	y: 80,
 	draw: function ()
-	if (state.current == state.over)
+	if(state.current == state.over)
 		context.drawImage(newGame, this.gX, this.gY, this.w, this.h, this.x, this.y, this.w, this.h);
 }
 }
