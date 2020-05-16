@@ -1,9 +1,14 @@
-//*div.image {
-	content:url("https://lh3.googleusercontent.com/proxy/lzPUaLaviRcnWfBLXwL4qvIHoAT53URzZ08eXoczUbxG-FuZoVm3JvFA6g9Odt7FmF5prK2W-v0EVO89FVNfCEhVXYBl4w9q");
-		width: 200px;
-			height:200px
+body {
+		background-image: URL("https://img.pngio.com/animated-blizzard-on-transparent-backgro-669153-png-images-pngio-animated-blizzard-png-1920_1080.png");
+	background-repeat: no-repeat;
 }
-div.UpsidedownObstacleimage{
+
+//*div.image {
+	content:url("https://i.pinimg.com/736x/9f/65/38/9f6538222c799ef1f83b13a024f33b63.jpg");
+		width: 200px;
+			height:200px;
+}
+//*div.UpsidedownObstacleimage{
 	content: url("https://pngimg.com/uploads/building/building_PNG30.png");
 	height: 500px;
 	width: 450px;
@@ -21,10 +26,6 @@ div.Obstacleimage{
 	background-color: lime;
 }
 
-body {
-		background-image: URL("https://img.pngio.com/animated-blizzard-on-transparent-backgro-669153-png-images-pngio-animated-blizzard-png-1920_1080.png");
-	background-repeat: no-repeat
-}
 .collision-state {
   background-color: green;
 }
@@ -37,3 +38,8 @@ body {
 	//*https://www.vippng.com/png/full/131-1315139_icebreaker-hungry-dragon-ice-dragons.png
 //*(dragon image/different character image)https://lh3.googleusercontent.com/proxy/lzPUaLaviRcnWfBLXwL4qvIHoAT53URzZ08eXoczUbxG-FuZoVm3JvFA6g9Odt7FmF5prK2W-v0EVO89FVNfCEhVXYBl4w9q
 https://www.vippng.com/png/full/131-1315139_icebreaker-hungry-dragon-ice-dragons.png
+
+body {
+		background-image: URL("https://img.pngio.com/animated-blizzard-on-transparent-backgro-669153-png-images-pngio-animated-blizzard-png-1920_1080.png");
+	background-repeat: no-repeat
+}
