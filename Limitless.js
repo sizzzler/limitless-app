@@ -1,5 +1,9 @@
+
+
+
 // SELECT CVS
 var cvs = document.getElementById("game");
+
 var ctx = cvs.getContext("2d");
 
 // GAME VARS AND CONSTS
