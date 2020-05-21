@@ -6,20 +6,20 @@ var cvs = document.getElementById("game");
 
 var ctx = cvs.getContext("2d");
 
-// GAME VARS AND CONSTS
+// GAME VARs
 let frames = 0;
 var DEGREE = Math.PI / 180;
 
 // LOAD SPRITE IMAGE
-var sprite = new Image();
-sprite.src = "img/newGame.png";
+var layout = new Image();
+layout.src = "img/newGame.png";
 
-// GAME STATE
-var state = {
-	current: 0,
+// GAME condition
+var condition = {
+	live: 0,
 	getReady: 0,
 	game: 1,
-	over: 2
+	gameOver: 2
 }
 
 // START BUTTON COORD
@@ -32,29 +32,36 @@ var startBtn = {
 
 // CONTROL THE GAME
 cvs.addEventListener("click", function (evt) {
-	switch (state.current) {
-		case state.getReady:
-			state.current = state.game;
+	switch (condition.live) {
+		case condition.getReady:
+			condition.live = condition.game;
 			break;
-		case state.game:
-			if (bird.y - bird.radius <= 0) return;
-			bird.flap()
+		case condition.game:
+			if (ironman.y - ironman.radius <= 0) return;
+			ironman.flap()
 			break;
-		case state.over:
-			let rect = cvs.getBoundingClientRect();
-			let clickX = evt.clientX - rect.left;
-			let clickY = evt.clientY - rect.top;
-
-
+		case condition.gameOver:
+			var rect = cvs.getBoundingClientRect();
+			var clickX = evt.clientX - rect.left;
+			var clickY = evt.clientY - rect.top;
 	}
 });
-cvs.addEventListener("click", function (evt) {
-	switch (state.current) {
-		case state.getReady:
-			state.current = state.game;
-
-	}
-})
+cvs.addEventListener("click", function(evt){
+					 if (Event.key === " d "){ 	switch (condition.live) {
+		case condition.getReady:
+			condition.live = condition.game;
+			break;
+		case condition.game:
+			if (ironman.y - ironman.radius <= 0) return;
+			ironman.flap()
+			break;
+		case condition.gameOver:
+			var rect = cvs.getBoundingClientRect();
+			var clickX = evt.clientX - rect.left;
+			var clickY = evt.clientY - rect.top;
+}
+					 }
+});
 
 // BACKGROUND
 var bg = {
@@ -66,16 +73,16 @@ var bg = {
 	//y : cvs.height - 380,
 
 	draw: function () {
-		ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
+		ctx.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
 
-		ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x + this.w, this.y, this.w, this.h);
+		ctx.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x + this.w, this.y, this.w, this.h);
 	}
 
 }
 
 // FOREGROUND
 var fg = {
-	sX: 275,
+	sX: 276,
 	sY: 0,
 	w: 224,
 	h: 112,
@@ -85,20 +92,20 @@ var fg = {
 	dx: 2,
 
 	draw: function () {
-		ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
+		ctx.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
 
-		ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x + this.w, this.y, this.w, this.h);
+		ctx.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x + this.w, this.y, this.w, this.h);
 	},
 
 	update: function () {
-		if (state.current == state.game) {
+		if (condition.live == condition.game) {
 			this.x = (this.x - this.dx) % (this.w / 2);
 		}
 	}
 }
 
-// BIRD
-var bird = {
+// ironman
+var ironman = {
 	animation: [
 		{
 			sX: 275,
@@ -109,12 +116,12 @@ var bird = {
 			sY: 180
 		},
 		{
-			sX: 270,
-			sY: 180
+			sX: 0,
+			sY: 0
 		},
 		{
-			sX: 270,
-			sY: 190
+			sX: 0,
+			sY: 0
 		}
     ],
 	x: 50,
@@ -132,12 +139,12 @@ var bird = {
 	//rotation : 0,
 
 	draw: function () {
-		let bird = this.animation[this.frame];
+		var ironman = this.animation[this.frame];
 
 		ctx.save();
 		ctx.translate(this.x, this.y);
 		ctx.rotate(this.rotation);
-		ctx.drawImage(sprite, bird.sX, bird.sY, this.w, this.h, -this.w / 2, -this.h / 2, this.w, this.h);
+		ctx.drawImage(layout, ironman.sX, ironman.sY, this.w, this.h, -this.w / 2, -this.h / 2, this.w, this.h);
 
 		ctx.restore();
 	},
@@ -149,7 +156,7 @@ var bird = {
 	update: function () {
 
 
-		if (state.current == state.getReady) {
+		if (condition.live == condition.getReady) {
 			this.y = 150; // RESET POSITION OF IRON MAN AFTER GAME OVER
 			this.rotation = 0 * DEGREE;
 		} else {
@@ -158,22 +165,13 @@ var bird = {
 
 			if (this.y + this.h / 2 >= cvs.height - fg.h) {
 				this.y = cvs.height - fg.h - this.h / 2;
-				if (state.current == state.game) {
-					state.current = state.over;
+				if (condition.live == condition.game) {
+					condition.live = condition.gameOver;
 
 				}
 			}
-			//allows iron man animantion angle to move
-			if (this.speed >= this.jump) {
-				this.rotation = 90 * DEGREE;
-				this.frame = 1;
-			} else {
-				this.rotation = -25 * DEGREE;
-			}
+
 		}
-
-
-
 	},
 	speedReset: function () {
 		this.speed = 0;
@@ -191,8 +189,8 @@ var getReady = {
 	y: 80,
 
 	draw: function () {
-		if (state.current == state.getReady) {
-			ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
+		if (condition.live == condition.getReady) {
+			ctx.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
 		}
 	}
 
@@ -208,8 +206,8 @@ var gameOver = {
 	y: 90,
 
 	draw: function () {
-		if (state.current == state.over) {
-			ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
+		if (condition.live == condition.gameOver) {
+			ctx.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
 		}
 	}
 
@@ -236,21 +234,21 @@ var pipes = {
 
 	draw: function () {
 		for (let i = 0; i < this.position.length; i++) {
-			let p = this.position[i];
+			var placement = this.position[i];
 
-			let topYPos = p.y;
-			let bottomYPos = p.y + this.h + this.gap;
+			var topYPos = placement.y;
+			var bottomYPos = placement.y + this.h + this.gap;
 
 			// top pipe
-			ctx.drawImage(sprite, this.top.sX, this.top.sY, this.w, this.h, p.x, topYPos, this.w, this.h);
+			ctx.drawImage(layout, this.top.sX, this.top.sY, this.w, this.h, placement.x, topYPos, this.w, this.h);
 
 			// bottom pipe
-			ctx.drawImage(sprite, this.bottom.sX, this.bottom.sY, this.w, this.h, p.x, bottomYPos, this.w, this.h);
+			ctx.drawImage(layout, this.bottom.sX, this.bottom.sY, this.w, this.h, placement.x, bottomYPos, this.w, this.h);
 		}
 	},
 
 	update: function () {
-		if (state.current !== state.game) return;
+		if (condition.live !== condition.game) return;
 
 		if (frames % 100 == 0) {
 			this.position.push({
@@ -258,28 +256,28 @@ var pipes = {
 				y: this.maxYPos * (Math.random() + 1)
 			});
 		}
-		for (let i = 0; i < this.position.length; i++) {
-			let p = this.position[i];
+		for (var i = 0; i < this.position.length; i++) {
+			var placement = this.position[i];
 
-			let bottomPipeYPos = p.y + this.h + this.gap;
+			var bottomPipeYPos = placement.y + this.h + this.gap;
 
 			// COLLISION DETECTION
 			// TOP PIPE
-			if (bird.x + bird.radius > p.x && bird.x - bird.radius < p.x + this.w && bird.y + bird.radius > p.y && bird.y - bird.radius < p.y + this.h) {
-				state.current = state.over;
+			if (ironman.x + ironman.radius > placement.x && ironman.x - ironman.radius < placement.x + this.w && ironman.y + ironman.radius > placement.y && ironman.y - ironman.radius < placement.y + this.h) {
+				condition.live = condition.gameOver;
 
 			}
 			// BOTTOM PIPE
-			if (bird.x + bird.radius > p.x && bird.x - bird.radius < p.x + this.w && bird.y + bird.radius > bottomPipeYPos && bird.y - bird.radius < bottomPipeYPos + this.h) {
-				state.current = state.over;
+			if (ironman.x + ironman.radius > placement.x && ironman.x - ironman.radius < placement.x + this.w && ironman.y + ironman.radius > bottomPipeYPos && ironman.y - ironman.radius < bottomPipeYPos + this.h) {
+				condition.live = condition.gameOver;
 
 			}
 
 			// MOVE THE PIPES TO THE LEFT
-			p.x -= this.dx;
+			placement.x -= this.dx;
 
 			// if the pipes go beyond canvas, we delete them from the array
-			if (p.x + this.w <= 0) {
+			if (placement.x + this.w <= 0) {
 				this.position.shift();
 				score.value += 1;
 
@@ -302,15 +300,15 @@ var score = {
 
 	draw: function () {
 		ctx.fillStyle = "#FFF";
-		ctx.strokeStyle = "lime";
+		ctx.strokeStyle = "white";
 
-		if (state.current == state.game) {
+		if (condition.live == condition.game) {
 			ctx.lineWidth = 2;
 			ctx.font = "35px Times New Roman";
 			ctx.fillText(this.value, cvs.width / 2, 50);
 			ctx.strokeText(this.value, cvs.width / 2, 50);
 
-		} else if (state.current == state.over) {
+		} else if (condition.live == condition.gameOver) {
 			// SCORE VALUE
 			ctx.font = "25px Times New Roman";
 			ctx.fillText(this.value, 225, 186);
@@ -334,7 +332,7 @@ function draw() {
 	bg.draw();
 	pipes.draw();
 	fg.draw();
-	bird.draw();
+	ironman.draw();
 	getReady.draw();
 	gameOver.draw();
 	score.draw();
@@ -342,7 +340,7 @@ function draw() {
 
 // UPDATE
 function update() {
-	bird.update();
+	ironman.update();
 	fg.update();
 	pipes.update();
 }
