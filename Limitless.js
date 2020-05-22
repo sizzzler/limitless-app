@@ -1,6 +1,6 @@
 // SELECT CVS
-var cvs = document.getElementById("game");
-var ctx = cvs.getContext("2d");
+var canvas = document.getElementById("game");
+var context = canvas.getContext("2d");
 
 // GAME VARs
 let frames = 0;
@@ -19,59 +19,32 @@ var condition = {
 }
 
 // START BUTTON COORD
-var startBtn = {
-	x: 120,
-	y: 263,
-	w: 83,
-	h: 29
-}
+
 
 // CONTROL THE GAME
-cvs.addEventListener("click", function (evt) {
+canvas.addEventListener("click", function (evt) {
 	switch (condition.live) {
 		case condition.getReady:
 			condition.live = condition.game;
 			break;
 		case condition.game:
-			if (ironman.y - ironman.radius <= 0) return;
+		 if (ironman.y - ironman.radius <= 0) return;
 			ironman.flap()
 			break;
 		case condition.gameOver:
-			var rect = cvs.getBoundingClientRect();
+			//var rect = cvs.getBoundingClientRect();
 			var clickX = evt.clientX - rect.left;
 			var clickY = evt.clientY - rect.top;
 	}
 });
-cvs.addEventListener("click", function(evt){
-					 if (Event.key === " d "){ 	switch (condition.live) {
-		case condition.getReady:
-			condition.live = condition.game;
-			break;
-		case condition.game:
-			if (ironman.y - ironman.radius <= 0) return;
-			ironman.flap()
-			break;
-		case condition.gameOver:
-			var rect = cvs.getBoundingClientRect();
-			var clickX = evt.clientX - rect.left;
-			var clickY = evt.clientY - rect.top;
-}
-					 }
-});
+
 
 // BACKGROUND
 var bg = {
-	sX: 0,
-	sY: 0,
-	w: 75,
-	h: 0,
-	x: 0,
-	//y : cvs.height - 380,
-
 	draw: function () {
-		ctx.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
+		context.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
 
-		ctx.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x + this.w, this.y, this.w, this.h);
+		context.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x + this.w, this.y, this.w, this.h);
 	}
 
 }
@@ -83,14 +56,14 @@ var fg = {
 	w: 224,
 	h: 112,
 	x: 0,
-	y: cvs.height - 112,
+	y: canvas.height - 112,
 
 	dx: 2,
 
 	draw: function () {
-		ctx.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
+		context.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
 
-		ctx.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x + this.w, this.y, this.w, this.h);
+		context.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x + this.w, this.y, this.w, this.h);
 	},
 
 	update: function () {
@@ -106,18 +79,6 @@ var ironman = {
 		{
 			sX: 275,
 			sY: 180
-		},
-		{
-			sX: 275,
-			sY: 180
-		},
-		{
-			sX: 0,
-			sY: 0
-		},
-		{
-			sX: 0,
-			sY: 0
 		}
     ],
 	x: 50,
@@ -125,24 +86,23 @@ var ironman = {
 	w: 56,
 	h: 26,
 
-	radius: 12,
+	radius: 8,
 
 	frame: 0,
 
 	gravity: 0.25,
 	jump: 4,
 	speed: 0,
-	//rotation : 0,
 
 	draw: function () {
 		var ironman = this.animation[this.frame];
 
-		ctx.save();
-		ctx.translate(this.x, this.y);
-		ctx.rotate(this.rotation);
-		ctx.drawImage(layout, ironman.sX, ironman.sY, this.w, this.h, -this.w / 2, -this.h / 2, this.w, this.h);
+		context.save();
+		context.translate(this.x, this.y);
+		context.rotate(this.rotation);
+		context.drawImage(layout, ironman.sX, ironman.sY, this.w, this.h, -this.w / 2, -this.h / 2, this.w, this.h);
 
-		ctx.restore();
+		context.restore();
 	},
 
 	flap: function () {
@@ -154,13 +114,13 @@ var ironman = {
 
 		if (condition.live == condition.getReady) {
 			this.y = 150; // RESET POSITION OF IRON MAN AFTER GAME OVER
-			this.rotation = 0 * DEGREE;
+			//this.rotation = 0 * DEGREE;
 		} else {
 			this.speed += this.gravity;
 			this.y += this.speed;
 
-			if (this.y + this.h / 2 >= cvs.height - fg.h) {
-				this.y = cvs.height - fg.h - this.h / 2;
+			if (this.y + this.h / 2 >= canvas.height - fg.h) {
+				this.y = canvas.height - fg.h - this.h / 2;
 				if (condition.live == condition.game) {
 					condition.live = condition.gameOver;
 
@@ -181,12 +141,12 @@ var getReady = {
 	sY: 228,
 	w: 173,
 	h: 152,
-	x: cvs.width / 2 - 173 / 2,
+	x: canvas.width / 2 - 173 / 2,
 	y: 80,
 
 	draw: function () {
 		if (condition.live == condition.getReady) {
-			ctx.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
+			context.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
 		}
 	}
 
@@ -198,12 +158,12 @@ var gameOver = {
 	sY: 228,
 	w: 225,
 	h: 202,
-	x: cvs.width / 2 - 225 / 2,
+	x: canvas.width / 2 - 225 / 2,
 	y: 90,
 
 	draw: function () {
 		if (condition.live == condition.gameOver) {
-			ctx.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
+			context.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
 		}
 	}
 
@@ -236,10 +196,10 @@ var pipes = {
 			var bottomYPos = placement.y + this.h + this.gap;
 
 			// top pipe
-			ctx.drawImage(layout, this.top.sX, this.top.sY, this.w, this.h, placement.x, topYPos, this.w, this.h);
+			context.drawImage(layout, this.top.sX, this.top.sY, this.w, this.h, placement.x, topYPos, this.w, this.h);
 
 			// bottom pipe
-			ctx.drawImage(layout, this.bottom.sX, this.bottom.sY, this.w, this.h, placement.x, bottomYPos, this.w, this.h);
+			context.drawImage(layout, this.bottom.sX, this.bottom.sY, this.w, this.h, placement.x, bottomYPos, this.w, this.h);
 		}
 	},
 
@@ -248,7 +208,7 @@ var pipes = {
 
 		if (frames % 100 == 0) {
 			this.position.push({
-				x: cvs.width,
+				x: canvas.width,
 				y: this.maxYPos * (Math.random() + 1)
 			});
 		}
@@ -295,23 +255,23 @@ var score = {
 	value: 0,
 
 	draw: function () {
-		ctx.fillStyle = "#FFF";
-		ctx.strokeStyle = "white";
+		context.fillStyle = "lime";
+		context.strokeStyle = "lime";
 
 		if (condition.live == condition.game) {
-			ctx.lineWidth = 2;
-			ctx.font = "35px Times New Roman";
-			ctx.fillText(this.value, cvs.width / 2, 50);
-			ctx.strokeText(this.value, cvs.width / 2, 50);
+			context.lineWidth = 2;
+			context.font = "35px Times New Roman";
+			context.fillText(this.value, canvas.width / 2, 50);
+			context.strokeText(this.value, canvas.width / 2, 50);
 
 		} else if (condition.live == condition.gameOver) {
 			// SCORE VALUE
-			ctx.font = "25px Times New Roman";
-			ctx.fillText(this.value, 225, 186);
-			ctx.strokeText(this.value, 225, 186);
+			context.font = "25px Times New Roman";
+			context.fillText(this.value, 225, 186);
+			context.strokeText(this.value, 225, 186);
 			// BEST SCORE
-			ctx.fillText(this.best, 225, 228);
-			ctx.strokeText(this.best, 225, 228);
+			context.fillText(this.best, 225, 228);
+			context.strokeText(this.best, 225, 228);
 		}
 	},
 
@@ -319,11 +279,21 @@ var score = {
 		this.value = 0;
 	}
 }
+var pauseButton = {
+	x: 120,
+	y: 263,
+	w: 83,
+	h: 29,
+	 draw : function(){
+			context.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
+
+	}
+}
 
 // DRAW
 function draw() {
-	ctx.fillStyle = "#000";
-	ctx.fillRect(0, 0, cvs.width, cvs.height);
+	context.fillStyle = "#000";
+	context.fillRect(0, 0, canvas.width, canvas.height);
 
 	bg.draw();
 	pipes.draw();
@@ -333,14 +303,14 @@ function draw() {
 	gameOver.draw();
 	score.draw();
 }
-
+//pauseButton.draw();^
 // UPDATE
 function update() {
 	ironman.update();
 	fg.update();
 	pipes.update();
 }
-
+//pauseButton.update();
 // LOOP
 function loop() {
 	update();
@@ -350,3 +320,5 @@ function loop() {
 	requestAnimationFrame(loop);
 }
 loop();
+
+
