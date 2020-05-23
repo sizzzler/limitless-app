@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 // SELECT CVS
 var canvas = document.getElementById("game");
+=======
+
+
+
+// SELECT Canvas
+var canvas = document.getElementById("game");
+
+>>>>>>> limitlesss/master
 var context = canvas.getContext("2d");
 
 // GAME VARs
@@ -32,15 +41,48 @@ canvas.addEventListener("click", function (evt) {
 			ironman.flap()
 			break;
 		case condition.gameOver:
+<<<<<<< HEAD
 			//var rect = cvs.getBoundingClientRect();
+=======
+			var rect = canvas.getBoundingClientRect();
+>>>>>>> limitlesss/master
 			var clickX = evt.clientX - rect.left;
 			var clickY = evt.clientY - rect.top;
 	}
 });
+<<<<<<< HEAD
 
 
 // BACKGROUND
 var bg = {
+=======
+canvas.addEventListener("click", function(evt){
+					 if (Event.key === " d "){ 	switch (condition.live) {
+		case condition.getReady:
+			condition.live = condition.game;
+			break;
+		case condition.game:
+			if (ironman.y - ironman.radius <= 0) return;
+			ironman.flap()
+			break;
+		case condition.gameOver:
+			var rect = canvas.getBoundingClientRect();
+			var clickX = evt.clientX - rect.left;
+			var clickY = evt.clientY - rect.top;
+}
+					 }
+});
+
+// BACKGROUND
+var bg = {
+	sX: 0,
+	sY: 0,
+	w: 75,
+	h: 0,
+	x: 0,
+	//y : canvas.height - 380,
+
+>>>>>>> limitlesss/master
 	draw: function () {
 		context.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
 
@@ -255,8 +297,13 @@ var score = {
 	value: 0,
 
 	draw: function () {
+<<<<<<< HEAD
 		context.fillStyle = "lime";
 		context.strokeStyle = "lime";
+=======
+		context.fillStyle = "#FFF";
+		context.strokeStyle = "white";
+>>>>>>> limitlesss/master
 
 		if (condition.live == condition.game) {
 			context.lineWidth = 2;
