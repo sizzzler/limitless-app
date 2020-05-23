@@ -1,11 +1,9 @@
 // canvas box
 var canvas = document.getElementById("game");
 var context = canvas.getContext("2d");
-
-// frames
 let frames = 0;
 
-// linkinh image layout
+// link image layout
 var layout = new Image();
 layout.src = "img/newGame.png";
 
@@ -25,10 +23,8 @@ canvas.addEventListener("click", function (evt) {
 		case condition.game:
 			if (ironman.y - ironman.radius <= 0) return;
 			ironman.flap()
-			pauseButton.draw()
 			break;
 		case condition.gameOver:
-			//var rect = cvs.getBoundingClientRect();
 			var clickX = evt.clientX - rect.left;
 			var clickY = evt.clientY - rect.top;
 	}
@@ -48,6 +44,7 @@ var og = {
 	x: 0,
 	y: canvas.height - 112,
 	dx: 2,
+	//both floors together for complete ground
  draw: function () {
 		context.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
 
@@ -99,7 +96,7 @@ var ironman = {
 
 
 		if (condition.live == condition.getReady) {
-			this.y = 150; // RESET POSITION OF IRON MAN AFTER GAME OVER
+			this.y = 150; // reset pos after game over
 
 		} else {
 			this.speed += this.gravity;
@@ -156,8 +153,8 @@ var gameOver = {
 
 }
 
-// PIPES
-var pipes = {
+// building
+var building = {
 	position: [],
 
 	top: {
@@ -233,10 +230,7 @@ var pipes = {
 	reset: function () {
 		this.position = [];
 	}
-
 }
-
-// SCORE
 var score = {
 	best: parseInt(localStorage.getItem("best")),
 	value: 0,
@@ -263,23 +257,12 @@ var score = {
 		this.value = 0;
 	}
 }
-var pauseButton = {
-	x: 120,
-	y: 263,
-	w: 83,
-	h: 29,
-	draw: function () {
-		if (condition.live == condition.game) {
-			context.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
-		}
-	}
-}
 // DRAW
 function draw() {
 	context.fillStyle = "#000";
 	context.fillRect(0, 0, canvas.width, canvas.height);
 	bg.draw();
-	pipes.draw();
+	building.draw();
 	og.draw();
 	ironman.draw();
 	getReady.draw();
@@ -290,7 +273,7 @@ function draw() {
 function update() {
 	ironman.update();
 	og.update();
-	pipes.update();
+	building.update();
 }
 // loop
 function loop() {
