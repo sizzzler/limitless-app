@@ -232,7 +232,7 @@ var building = {
 	}
 }
 var score = {
-	best: parseInt(localStorage.getItem("best")),
+	best: parseInt(localStorage.getItem("best")) || 0,
 	value: 0,
 
 	draw: function () {
