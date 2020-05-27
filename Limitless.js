@@ -52,7 +52,7 @@ var og = {
 	},
 
 	update: function () {
-		if (condition.live == condition.game) {
+		if (condition.live == condition.game || condition.live == condition.getReady ||condition.live == condition.gameOver) {
 			this.x = (this.x - this.dx) % (this.w / 2);
 		}
 	}
