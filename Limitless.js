@@ -32,7 +32,7 @@ canvas.addEventListener("click", function (evt) {
 // background
 var bg = {
 	draw: function () {
-		context.drawImage(layout, this.w, this.h, this.x + this.w, this.y, this.w, this.h,this.sX,this.sY);
+		context.drawImage(layout, this.w, this.h, this.x + this.w, this.y, this.w, this.h, this.sX, this.sY);
 	}
 }
 // other ground
@@ -45,14 +45,14 @@ var og = {
 	y: canvas.height - 112,
 	dx: 2,
 	//both floors together for complete ground
- draw: function () {
+	draw: function () {
 		context.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h);
 
 		context.drawImage(layout, this.sX, this.sY, this.w, this.h, this.x + this.w, this.y, this.w, this.h);
 	},
 
 	update: function () {
-		if (condition.live == condition.game || condition.live == condition.getReady ||condition.live == condition.gameOver) {
+		if (condition.live == condition.game || condition.live == condition.getReady || condition.live == condition.gameOver) {
 			this.x = (this.x - this.dx) % (this.w / 2);
 		}
 	}
